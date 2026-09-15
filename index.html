@@ -16,7 +16,8 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:var(--bg);color:var(--txt);font-family:-apple-system,'SF Pro Text','Segoe UI',Roboto,sans-serif;padding:24px 32px 60px;transition:background .25s,color .25s}
 .topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:8px;flex-wrap:wrap}
-.topbar img{height:44px;width:auto}
+.topbar img{height:26px;width:auto}
+.topbar .brand{display:flex;align-items:center;gap:10px}
 .theme-btn{background:var(--card);border:1px solid var(--border);color:var(--txt);border-radius:999px;padding:8px 16px;font-size:13px;cursor:pointer;transition:all .2s}
 .theme-btn:hover{border-color:var(--accent);color:var(--accent)}
 .sub{color:var(--muted);font-size:13px;margin:2px 0 24px}
@@ -52,7 +53,7 @@ svg text{fill:var(--muted);font-size:10px;font-family:inherit}
 </head>
 <body data-theme="dark">
 <div class="topbar">
-  <img id="logo" src="assets/logo-white.png" alt="Inmersiva">
+  <div class="brand"><img id="logo" src="wordmark-white.png" alt="Inmersiva"></div>
   <button class="theme-btn" id="themeBtn">☀️ Claro / 🌙 Oscuro</button>
 </div>
 <div class="sub">Dashboard de facturación · datos actualizados a Septiembre 2026</div>
@@ -84,7 +85,7 @@ const fmt0 = n => Math.round(n).toLocaleString('es-ES') + ' €';
 const btn=document.getElementById('themeBtn'), logo=document.getElementById('logo');
 function setTheme(t){
   document.body.dataset.theme=t;
-  logo.src = t==='light' ? 'assets/logo-color.png' : 'assets/logo-white.png';
+  logo.src = t==='light' ? 'wordmark-blue.png' : 'wordmark-white.png';
   try{localStorage.setItem('inm-theme',t)}catch(e){}
   renderCharts();
 }
@@ -141,11 +142,12 @@ function renderCharts(){
 
   // Year bars
   const maxY=Math.max(...D.years.map(y=>y.sub));
-  let b='<svg viewBox="0 0 300 190" width="100%">';
+  let b='<svg viewBox="0 0 300 210" width="100%">';
   D.years.forEach((y,i)=>{
-   const h=y.sub/maxY*140, x=30+i*95;
+   const h=y.sub/maxY*130, x=30+i*95;
+   const top=Math.max(30, 150-h-18);
    b+=`<rect x="${x}" y="${150-h}" width="60" height="${h}" rx="6" fill="${cols[i]}" opacity=".9"><title>${y.year}: ${fmt(y.sub)}</title></rect>
-    <text x="${x+30}" y="${145-h}" text-anchor="middle" fill="${txt}" font-weight="600" font-size="12">${fmt0(y.sub)}</text>
+    <text x="${x+30}" y="${top}" text-anchor="middle" fill="${txt}" font-weight="600" font-size="12">${fmt0(y.sub)}</text>
     <text x="${x+30}" y="168" text-anchor="middle" font-size="12">${y.year}</text>`;
   });
   document.getElementById('bars').innerHTML=b+'</svg>';
