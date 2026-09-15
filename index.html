@@ -144,8 +144,8 @@ function renderCharts(){
   const maxY=Math.max(...D.years.map(y=>y.sub));
   let b='<svg viewBox="0 0 300 210" width="100%">';
   D.years.forEach((y,i)=>{
-   const h=y.sub/maxY*130, x=30+i*95;
-   const top=Math.max(30, 150-h-18);
+   const h=y.sub/maxY*122, x=30+i*95;
+   const top=150-h-20;
    b+=`<rect x="${x}" y="${150-h}" width="60" height="${h}" rx="6" fill="${cols[i]}" opacity=".9"><title>${y.year}: ${fmt(y.sub)}</title></rect>
     <text x="${x+30}" y="${top}" text-anchor="middle" fill="${txt}" font-weight="600" font-size="12">${fmt0(y.sub)}</text>
     <text x="${x+30}" y="168" text-anchor="middle" font-size="12">${y.year}</text>`;
